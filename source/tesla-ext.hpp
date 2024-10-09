@@ -43,24 +43,54 @@ public:
      * @param stepDescriptions Step names displayed above the track bar
      */
     NamedStepTrackBarVector(const char icon[3], std::vector<std::string> stepDescriptions)
-        : StepTrackBar(icon, stepDescriptions.size()), m_stepDescriptions(stepDescriptions.begin(), stepDescriptions.end()) {}
+        : StepTrackBar(icon, stepDescriptions.size(), true), m_stepDescriptions(stepDescriptions.begin(), stepDescriptions.end()) {}
 
     virtual ~NamedStepTrackBarVector() {}
 
     virtual void draw(gfx::Renderer* renderer) override {
 
+        // TrackBarV2 width excluding the handle areas
         u16 trackBarWidth = this->getWidth() - 95;
-        u16 stepWidth = trackBarWidth / (this->m_numSteps - 1);
-
-        for (u8 i = 0; i < this->m_numSteps; i++) {
-            renderer->drawRect(this->getX() + 60 + stepWidth * i, this->getY() + 50, 1, 10, a(tsl::style::color::ColorFrame));
+        
+        // Base X and Y coordinates
+        u16 baseX = this->getX() + 59;
+        u16 baseY = this->getY() + 44; // 50 - 3
+        
+        s32 iconOffset;
+        
+        if (m_icon[0] != '\0') {
+            s32 iconWidth = 23;//renderer->calculateStringWidth(m_icon, 23);
+            iconOffset = 14 + iconWidth;
+            baseX += iconOffset;
+            trackBarWidth -= iconOffset;
         }
-
+        // Calculate the spacing between each step
+        float stepSpacing = static_cast<float>(trackBarWidth) / (this->m_numSteps - 1);
+        
+        // Calculate the halfway point index
+        u8 halfNumSteps = (this->m_numSteps - 1) / 2;
+        // Draw step rectangles
+        //u16 stepX;
+        for (u8 i = 0; i < this->m_numSteps; i++) {
+            u16 stepX = baseX + std::round(i * stepSpacing);
+            
+            // Subtract 1 from the X position for steps on the right side of the center
+            if (i > halfNumSteps) {
+                stepX -= 1;
+            }
+            // Adjust the last step to avoid overshooting
+            if (i == this->m_numSteps - 1) {
+                stepX = baseX + trackBarWidth -1;
+            }
+    
+            renderer->drawRect(stepX, baseY, 1, 8, a(trackBarEmptyColor));
+        }
+        
         u8 currentDescIndex = std::clamp(this->m_value / (100 / (this->m_numSteps - 1)), 0, this->m_numSteps - 1);
-
-        auto [descWidth, descHeight] = renderer->drawString(this->m_stepDescriptions[currentDescIndex].c_str(), false, 0, 0, 15, tsl::style::color::ColorTransparent);
-        renderer->drawString(this->m_stepDescriptions[currentDescIndex].c_str(), false, ((this->getX() + 60) + (this->getWidth() - 95) / 2) - (descWidth / 2), this->getY() + 20, 15, a(tsl::style::color::ColorDescription));
-
+        auto descWidth = renderer->calculateStringWidth(this->m_stepDescriptions[currentDescIndex].c_str(), 15);
+        renderer->drawString(this->m_stepDescriptions[currentDescIndex].c_str(), false, ((baseX +1) + (trackBarWidth) / 2) - (descWidth / 2), this->getY() + 20 + 6, 15, a(tsl::style::color::ColorDescription));
+        
+        // Draw the parent trackbar
         StepTrackBar::draw(renderer);
     }
 

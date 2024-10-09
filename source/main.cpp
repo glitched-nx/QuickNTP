@@ -135,13 +135,13 @@ public:
 
         auto list = new tsl::elm::List();
 
-        list->setClickListener([this](u64 keys) {
-            if (keys & (HidNpadButton_AnyUp | HidNpadButton_AnyDown | HidNpadButton_AnyLeft | HidNpadButton_AnyRight)) {
-                Message = "";
-                return true;
-            }
-            return false;
-        });
+        //list->setClickListener([this](u64 keys) {
+        //    if (keys & (HidNpadButton_AnyUp | HidNpadButton_AnyDown | HidNpadButton_AnyLeft | HidNpadButton_AnyRight)) {
+        //        Message = "";
+        //        return true;
+        //    }
+        //    return false;
+        //});
 
         list->addItem(new tsl::elm::CategoryHeader("Pick server   |   \uE0E0  Sync   |   \uE0E3  Offset"));
 
@@ -203,17 +203,17 @@ public:
 class NtpOverlay : public tsl::Overlay {
 public:
     virtual void initServices() override {
-        ASSERT_FATAL(socketInitializeDefault());
-        ASSERT_FATAL(nifmInitialize(NifmServiceType_User));
-        ASSERT_FATAL(timeInitialize());
-        ASSERT_FATAL(smInitialize());
+        //ASSERT_FATAL(socketInitializeDefault());
+        //ASSERT_FATAL(nifmInitialize(NifmServiceType_User));
+        //ASSERT_FATAL(timeInitialize());
+        //ASSERT_FATAL(smInitialize());
     }
 
     virtual void exitServices() override {
-        socketExit();
-        nifmExit();
-        timeExit();
-        smExit();
+        //socketExit();
+        //nifmExit();
+        //timeExit();
+        //smExit();
     }
 
     virtual std::unique_ptr<tsl::Gui> loadInitialGui() override {

@@ -40,11 +40,11 @@ include $(DEVKITPRO)/libnx/switch_rules
 APP_TITLE	:=	QuickNTP
 APP_VERSION :=	1.2.8
 
-TARGET		:=	$(notdir $(CURDIR))
+TARGET		:=	QuickNTP
 BUILD		:=	build
-SOURCES		:=	source
+SOURCES		:=	libs/libultrahand/libultra/source source
 DATA		:=	data
-INCLUDES	:=	include libs/libtesla/include
+INCLUDES	:=	include libs/libultrahand/libultra/include libs/libultrahand/libtesla/include
 
 NO_ICON		:=  1
 
@@ -58,12 +58,16 @@ CFLAGS	:=	-g -Wall -O2 -ffunction-sections \
 
 CFLAGS	+=	$(INCLUDE) -D__SWITCH__
 
+# Enable appearance overriding
+UI_OVERRIDE_PATH := /config/QuickNTP/
+CFLAGS += -DUI_OVERRIDE_PATH="\"$(UI_OVERRIDE_PATH)\""
+
 CXXFLAGS	:= $(CFLAGS) -std=c++20
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lnx
+LIBS	:= -lcurl -lz -lzzip -lmbedtls -lmbedx509 -lmbedcrypto -ljansson -lnx
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
