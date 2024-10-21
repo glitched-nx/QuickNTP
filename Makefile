@@ -38,7 +38,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #   NACP building is skipped as well.
 #---------------------------------------------------------------------------------
 APP_TITLE	:=	QuickNTP
-APP_VERSION :=	1.2.8-1
+APP_VERSION :=	1.2.8-1+
 
 TARGET		:=	QuickNTP
 BUILD		:=	build
@@ -61,6 +61,10 @@ CFLAGS	+=	$(INCLUDE) -D__SWITCH__
 # Enable appearance overriding
 UI_OVERRIDE_PATH := /config/QuickNTP/
 CFLAGS += -DUI_OVERRIDE_PATH="\"$(UI_OVERRIDE_PATH)\""
+
+# Disable fstream
+NO_FSTREAM_DIRECTIVE := 1
+CFLAGS += -DNO_FSTREAM_DIRECTIVE=$(NO_FSTREAM_DIRECTIVE)
 
 CXXFLAGS	:= $(CFLAGS) -std=c++20
 
