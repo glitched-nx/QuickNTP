@@ -87,7 +87,7 @@ public:
         }
         
         u8 currentDescIndex = std::clamp(this->m_value / (100 / (this->m_numSteps - 1)), 0, this->m_numSteps - 1);
-        auto descWidth = renderer->calculateStringWidth(this->m_stepDescriptions[currentDescIndex].c_str(), 15);
+        auto descWidth = tsl::gfx::calculateStringWidth(this->m_stepDescriptions[currentDescIndex].c_str(), 15);
         renderer->drawString(this->m_stepDescriptions[currentDescIndex].c_str(), false, ((baseX +1) + (trackBarWidth) / 2) - (descWidth / 2), this->getY() + 20 + 6, 15, a(tsl::style::color::ColorDescription));
         
         // Draw the parent trackbar
