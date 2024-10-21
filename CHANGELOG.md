@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.8-1] - 2024-10-20
+
+- libnx @ [v4.7.0](https://github.com/switchbrew/libnx/releases/tag/v4.7.0)
+
 ## [1.2.8] - 2023-04-03
 
 ### Updated
@@ -79,6 +83,7 @@ Thanks to [@DarkMatterCore](https://github.com/DarkMatterCore)!
 
 - First release
 
+[1.2.8-1]: https://github.com/nedex/QuickNTP/compare/1.2.8...1.2.8-1
 [1.2.8]: https://github.com/nedex/QuickNTP/compare/1.2.7...1.2.8
 [1.2.7]: https://github.com/nedex/QuickNTP/compare/1.2.6...1.2.7
 [1.2.6]: https://github.com/nedex/QuickNTP/compare/1.2.5...1.2.6
